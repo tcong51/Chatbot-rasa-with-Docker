@@ -1,0 +1,47 @@
+version: '3.0' 
+ 
+services:
+  rasa:
+    container_name: rasa
+    # go to docker hub/rasa changelog to see what version and flavour of rasa that you want
+    # Make sure that the version you specify is the same as the version that you pip installed
+    image: rasa/rasa:2.7.1
+    #Map port 5005 of local machine to 5005 of container
+    ports:
+      - 5005:5005
+    # This command will copy everything in current directory to the /app directory in the container 
+    volumes:
+      - ./:/app
+    command:
+      - run
+
+  app:
+    image: app
+    expose:
+      - 5055
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_password
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_user_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 80:80
+volumes:
+  dbdata:

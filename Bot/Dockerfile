@@ -1,0 +1,14 @@
+FROM rasa/rasa:2.7.1
+
+USER root
+ADD ./models /app/models/
+ADD ./actions /app/actions/
+ADD ./scripts /app/scripts/
+ADD ./data /app/data/
+ADD ./domain.yml /app/
+ADD ./config.yml /app/
+
+RUN chmod +x /app/scripts/*
+
+ENTRYPOINT []
+CMD /app/scripts/start_services.sh
