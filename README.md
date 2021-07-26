@@ -1,6 +1,6 @@
 # Chatbot-rasa-with-Docker
-Docker compose include actions server with phpmysql
-Version rasa:2.7.1
+- Docker compose include actions server with phpmysql
+- Version rasa:2.7.1
 # Step 1
 clone git 
 # Step 2
